@@ -1,0 +1,18 @@
+export const ENDPOINTS = {
+  authCallback: '/auth/callback',
+  adminCheck: '/admin/check',
+  adminSongs: '/admin/songs',
+  adminSongById: (id: string) => `/admin/songs/${id}`,
+  adminAlbums: '/admin/albums',
+  adminAlbumById: (id: string) => `/admin/albums/${id}`,
+  albums: '/albums',
+  albumById: (id: string) => `/albums/${id}`,
+  songs: '/songs',
+  featuredSongs: '/songs/featured',
+  madeForYouSongs: '/songs/made-for-you',
+  trendingSongs: '/songs/trending',
+  users: '/users',
+  userMessages: (userId: string) => `/users/messages/${userId}`,
+  userById: (userId: string) => `/users/${userId}`,
+  stats: '/stats',
+} as const;
