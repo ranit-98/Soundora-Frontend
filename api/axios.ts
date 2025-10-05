@@ -1,19 +1,29 @@
-import axios from 'axios';
-import { parseCookies } from 'nookies';
+import axios from "axios";
+import { parseCookies } from "nookies";
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api",
   withCredentials: true,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 // Add interceptors if needed, e.g., for auth token
 axiosInstance.interceptors.request.use((config) => {
-    const cookies = parseCookies();
-  
-  const token = cookies?.token; 
+  let token = null;
+
+  const cookies = parseCookies();
+  token = cookies?.token ? cookies.token : null;
+  console.log("Token from cookies:", token);
+
+  // Client-side: Fallback to localStorage
+  if (typeof window !== "undefined" && !token) {
+    token = localStorage.getItem("token");
+    token = token ? token : null;
+    console.log("Client-side - Token from localStorage:", token);
+  }
+  // const token = cookies?.token;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

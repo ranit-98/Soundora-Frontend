@@ -44,7 +44,7 @@ export default async function handler(
     //     `isAdmin=${isAdmin}; Path=/; SameSite=Lax; Secure`,
     //   ]);
     res.setHeader("Set-Cookie", [
-      `token=${token}; Path=/; HttpOnly; SameSite=Lax; Secure`,
+      `token=${token}; Path=/;  SameSite=Lax; Secure`,
       `userId=${userId}; Path=/; SameSite=Lax; Secure`,
       `googleId=${googleId}; Path=/;SameSite=Lax; Secure`,
       `isAdmin=${isAdmin}; Path=/; SameSite=Lax; Secure`,
