@@ -1,4 +1,4 @@
-// components/chat/MessageInput.tsx
+
 "use client";
 
 import { useState } from "react";

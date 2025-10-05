@@ -111,19 +111,7 @@ export const useChatStore = create<ChatState>()(
             });
           });
 
-          // socket.on("receive_message", (message: Message) => {
-          //   console.log(`[SOCKET] Message received:`, message);
-          //   set((state) => ({
-          //     messages: [...state.messages, message],
-          //   }));
-          // });
-
-          // socket.on("message_sent", (message: Message) => {
-          //   console.log(`[SOCKET] Message sent confirmed:`, message);
-          //   set((state) => ({
-          //     messages: [...state.messages, message],
-          //   }));
-          // });
+         
           socket.on("receive_message", (message: Message) => {
             set((state) => {
               if (state.messages.some((m) => m._id === message._id))

@@ -1,10 +1,10 @@
 
 'use client';
 
-import { Box, Typography, Container, Button } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function LoginPage() {
     <Container maxWidth="sm" sx={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Toaster position="top-right" />
       <Box sx={{ textAlign: 'center', bgcolor: 'background.default', p: 4, borderRadius: 2 }}>
-        <Typography variant="h4" gutterBottom>Welcome to Music App</Typography>
+        <Typography variant="h4" gutterBottom>Welcome to Soundora- Music App</Typography>
         <Typography variant="body1" sx={{ mb: 4 }}>Sign in with Google to continue</Typography>
         <Button variant="contained" color="success" onClick={handleLogin}>
           Login with Google

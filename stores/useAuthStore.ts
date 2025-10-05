@@ -31,7 +31,7 @@ export const useAuthStore = create<AuthState>()(
       error: null,
       isHydrated: false,
 
-      /** 🔁 Reset everything */
+      
       reset: () =>
         set({
           isAdmin: false,
@@ -42,7 +42,7 @@ export const useAuthStore = create<AuthState>()(
           isHydrated: false,
         }),
 
-      /** 🚪 Logout and clear cookies */
+      /** Logout and clear cookies */
       logout: () => {
         destroyCookie(null, "isAdmin");
         destroyCookie(null, "userId");
@@ -53,11 +53,11 @@ export const useAuthStore = create<AuthState>()(
           userId: null,
           googleId: null,
           error: null,
-          isHydrated: true, // Keep hydrated true after logout
+          isHydrated: true, 
         });
       },
 
-      /** 📥 Initialize from cookies - optimized for speed */
+   
       initializeFromCookies: () => {
         // Early return if already hydrated
         if (get().isHydrated) return;
@@ -73,12 +73,12 @@ export const useAuthStore = create<AuthState>()(
           });
         } catch (error) {
           console.error("Failed to parse cookies:", error);
-          // Still set hydrated to true even on error to prevent infinite loading
+
           set({ isHydrated: true });
         }
       },
 
-      /** 🔧 Manual initialization (e.g. after login) */
+    
       setInitialState: (initialState) => {
         set({
           isAdmin: initialState.isAdmin,
@@ -92,9 +92,9 @@ export const useAuthStore = create<AuthState>()(
   )
 );
 
-// Initialize immediately on store creation (client-side only)
+
 if (typeof window !== "undefined") {
-  // Add a small delay to ensure cookies are available
+
   setTimeout(() => {
     const state = useAuthStore.getState();
     if (!state.isHydrated) {
@@ -102,7 +102,7 @@ if (typeof window !== "undefined") {
     }
   }, 0);
 
-  // Fallback: Force hydration after 100ms if still not hydrated
+ 
   setTimeout(() => {
     const state = useAuthStore.getState();
     if (!state.isHydrated) {

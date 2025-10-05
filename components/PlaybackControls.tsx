@@ -1,37 +1,34 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import { usePlayerStore } from '../stores/usePlayerStore';
-import { Box, Button, Slider, Typography } from '@mui/material';
 import {
   Pause,
   PlayArrow,
+  Repeat,
+  Shuffle,
   SkipNext,
   SkipPrevious,
-  Shuffle,
-  Repeat,
   VolumeUp,
-  Mic,
-  QueueMusic,
-  Laptop
-} from '@mui/icons-material';
-import Image from 'next/image';
+} from "@mui/icons-material";
+import { Box, Button, Slider, Typography } from "@mui/material";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { usePlayerStore } from "../stores/usePlayerStore";
 
 const formatTime = (seconds: number) => {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = Math.floor(seconds % 60);
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 };
 
 export default function PlaybackControls() {
-  const { currentSong, isPlaying, togglePlay, playNext, playPrevious } = usePlayerStore();
+  const { currentSong, isPlaying, togglePlay, playNext, playPrevious } =
+    usePlayerStore();
   const [volume, setVolume] = useState(75);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const hasInitialized = useRef(false);
 
-  // Update audio element when song changes (NO AUTOPLAY)
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -40,31 +37,27 @@ export default function PlaybackControls() {
       audio.src = currentSong.audioUrl;
       audio.currentTime = 0;
 
-      // Only play if isPlaying is true AND it's not the initial load
       if (isPlaying && hasInitialized.current) {
-        audio.play().catch(err => console.log('Audio play error:', err));
+        audio.play().catch((err) => console.log("Audio play error:", err));
       }
-      
-      // Mark as initialized after first song load
+
       if (!hasInitialized.current) {
         hasInitialized.current = true;
       }
     }
   }, [currentSong]);
 
-  // Handle play/pause state changes
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !hasInitialized.current) return;
 
     if (isPlaying) {
-      audio.play().catch(err => console.log('Audio play error:', err));
+      audio.play().catch((err) => console.log("Audio play error:", err));
     } else {
       audio.pause();
     }
   }, [isPlaying]);
 
-  // Track progress and duration
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -73,30 +66,28 @@ export default function PlaybackControls() {
     const updateDuration = () => setDuration(audio.duration || 0);
     const handleEnded = () => {
       usePlayerStore.setState({ isPlaying: false });
-      playNext(); // Auto play next song
+      playNext();
     };
 
-    audio.addEventListener('timeupdate', updateTime);
-    audio.addEventListener('loadedmetadata', updateDuration);
-    audio.addEventListener('ended', handleEnded);
+    audio.addEventListener("timeupdate", updateTime);
+    audio.addEventListener("loadedmetadata", updateDuration);
+    audio.addEventListener("ended", handleEnded);
 
     return () => {
-      audio.removeEventListener('timeupdate', updateTime);
-      audio.removeEventListener('loadedmetadata', updateDuration);
-      audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener("timeupdate", updateTime);
+      audio.removeEventListener("loadedmetadata", updateDuration);
+      audio.removeEventListener("ended", handleEnded);
     };
   }, [currentSong, playNext]);
 
-  // Set initial volume
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume / 100;
     }
   }, [volume]);
 
-  // Seek in audio
   const handleSeek = (_: Event, value: number | number[]) => {
-    if (audioRef.current && typeof value === 'number') {
+    if (audioRef.current && typeof value === "number") {
       audioRef.current.currentTime = value;
       setCurrentTime(value);
     }
@@ -106,27 +97,29 @@ export default function PlaybackControls() {
     <Box
       component="footer"
       sx={{
-        height: { xs: 'auto', sm: 96 },
-        bgcolor: '#09090b',
-        borderTop: '1px solid #27272a',
+        height: { xs: "auto", sm: 96 },
+        bgcolor: "#09090b",
+        borderTop: "1px solid #27272a",
         px: { xs: 1, sm: 2 },
         py: { xs: 1, sm: 0 },
       }}
     >
-      {/* Hidden audio element */}
       <audio ref={audioRef} />
 
-      {/* Mobile Progress Bar - Top of footer */}
       <Box
         sx={{
-          display: { xs: 'flex', sm: 'none' },
-          alignItems: 'center',
+          display: { xs: "flex", sm: "none" },
+          alignItems: "center",
           gap: 1,
           pb: 1,
           px: 1,
         }}
       >
-        <Typography variant="caption" color="text.secondary" sx={{ minWidth: 35 }}>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ minWidth: 35 }}
+        >
           {formatTime(currentTime)}
         </Typography>
         <Slider
@@ -137,41 +130,45 @@ export default function PlaybackControls() {
           disabled={!currentSong}
           sx={{
             flex: 1,
-            '& .MuiSlider-thumb': {
+            "& .MuiSlider-thumb": {
               width: 10,
               height: 10,
             },
-            '& .MuiSlider-track': {
+            "& .MuiSlider-track": {
               height: 3,
             },
-            '& .MuiSlider-rail': {
+            "& .MuiSlider-rail": {
               height: 3,
             },
           }}
         />
-        <Typography variant="caption" color="text.secondary" sx={{ minWidth: 35 }}>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ minWidth: 35 }}
+        >
           {formatTime(duration)}
         </Typography>
       </Box>
 
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          height: { xs: 'auto', sm: '100%' },
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          height: { xs: "auto", sm: "100%" },
           maxWidth: 1800,
-          mx: 'auto',
+          mx: "auto",
         }}
       >
         {/* Left: Song Info */}
         <Box
           sx={{
-            display: { xs: 'none', sm: 'flex' },
-            alignItems: 'center',
+            display: { xs: "none", sm: "flex" },
+            alignItems: "center",
             gap: 2,
             minWidth: 180,
-            width: '30%',
+            width: "30%",
           }}
         >
           {currentSong && (
@@ -181,15 +178,18 @@ export default function PlaybackControls() {
                 alt={currentSong.title}
                 width={56}
                 height={56}
-                style={{ borderRadius: 4, objectFit: 'cover' }}
+                style={{ borderRadius: 4, objectFit: "cover" }}
               />
               <Box sx={{ flex: 1, minWidth: 0 }}>
                 <Typography
                   variant="body2"
                   noWrap
                   sx={{
-                    fontWeight: 'medium',
-                    '&:hover': { textDecoration: 'underline', cursor: 'pointer' },
+                    fontWeight: "medium",
+                    "&:hover": {
+                      textDecoration: "underline",
+                      cursor: "pointer",
+                    },
                   }}
                 >
                   {currentSong.title}
@@ -199,7 +199,10 @@ export default function PlaybackControls() {
                   noWrap
                   color="text.secondary"
                   sx={{
-                    '&:hover': { textDecoration: 'underline', cursor: 'pointer' },
+                    "&:hover": {
+                      textDecoration: "underline",
+                      cursor: "pointer",
+                    },
                   }}
                 >
                   {currentSong.artist}
@@ -212,20 +215,26 @@ export default function PlaybackControls() {
         {/* Center: Controls */}
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
             gap: 1,
             flex: 1,
-            maxWidth: { xs: '100%', sm: '45%' },
+            maxWidth: { xs: "100%", sm: "45%" },
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 3 } }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: { xs: 1, sm: 3 },
+            }}
+          >
             <Button
               sx={{
-                display: { xs: 'none', sm: 'inline-flex' },
-                color: 'text.secondary',
-                '&:hover': { color: 'white' },
+                display: { xs: "none", sm: "inline-flex" },
+                color: "text.secondary",
+                "&:hover": { color: "white" },
                 minWidth: 0,
               }}
             >
@@ -233,8 +242,8 @@ export default function PlaybackControls() {
             </Button>
             <Button
               sx={{
-                color: 'text.secondary',
-                '&:hover': { color: 'white' },
+                color: "text.secondary",
+                "&:hover": { color: "white" },
                 minWidth: 0,
               }}
               onClick={playPrevious}
@@ -246,23 +255,27 @@ export default function PlaybackControls() {
               onClick={togglePlay}
               disabled={!currentSong}
               sx={{
-                bgcolor: 'white',
-                color: 'black',
-                borderRadius: '50%',
+                bgcolor: "white",
+                color: "black",
+                borderRadius: "50%",
                 width: { xs: 36, sm: 32 },
                 height: { xs: 36, sm: 32 },
                 minWidth: 0,
-                '&:hover': { bgcolor: '#e5e5e5', transform: 'scale(1.05)' },
-                '&:disabled': { bgcolor: '#4b5563', color: '#9ca3af' },
-                transition: 'all 0.2s',
+                "&:hover": { bgcolor: "#e5e5e5", transform: "scale(1.05)" },
+                "&:disabled": { bgcolor: "#4b5563", color: "#9ca3af" },
+                transition: "all 0.2s",
               }}
             >
-              {isPlaying ? <Pause fontSize="small" /> : <PlayArrow fontSize="small" />}
+              {isPlaying ? (
+                <Pause fontSize="small" />
+              ) : (
+                <PlayArrow fontSize="small" />
+              )}
             </Button>
             <Button
               sx={{
-                color: 'text.secondary',
-                '&:hover': { color: 'white' },
+                color: "text.secondary",
+                "&:hover": { color: "white" },
                 minWidth: 0,
               }}
               onClick={playNext}
@@ -272,9 +285,9 @@ export default function PlaybackControls() {
             </Button>
             <Button
               sx={{
-                display: { xs: 'none', sm: 'inline-flex' },
-                color: 'text.secondary',
-                '&:hover': { color: 'white' },
+                display: { xs: "none", sm: "inline-flex" },
+                color: "text.secondary",
+                "&:hover": { color: "white" },
                 minWidth: 0,
               }}
             >
@@ -285,10 +298,10 @@ export default function PlaybackControls() {
           {/* Progress */}
           <Box
             sx={{
-              display: { xs: 'none', sm: 'flex' },
-              alignItems: 'center',
+              display: { xs: "none", sm: "flex" },
+              alignItems: "center",
               gap: 1,
-              width: '100%',
+              width: "100%",
             }}
           >
             <Typography variant="caption" color="text.secondary">
@@ -301,11 +314,11 @@ export default function PlaybackControls() {
               onChange={handleSeek}
               disabled={!currentSong}
               sx={{
-                '&:hover': { cursor: 'pointer' },
-                '& .MuiSlider-thumb': {
+                "&:hover": { cursor: "pointer" },
+                "& .MuiSlider-thumb": {
                   width: 12,
                   height: 12,
-                  '&:hover': { boxShadow: '0 0 0 8px rgba(34, 197, 94, 0.16)' },
+                  "&:hover": { boxShadow: "0 0 0 8px rgba(34, 197, 94, 0.16)" },
                 },
               }}
             />
@@ -318,38 +331,19 @@ export default function PlaybackControls() {
         {/* Right: Volume & extras */}
         <Box
           sx={{
-            display: { xs: 'none', sm: 'flex' },
-            alignItems: 'center',
+            display: { xs: "none", sm: "flex" },
+            alignItems: "center",
             gap: 2,
             minWidth: 180,
-            width: '30%',
-            justifyContent: 'flex-end',
+            width: "30%",
+            justifyContent: "flex-end",
           }}
         >
-          
-          {/* <Button
-            sx={{
-              color: 'text.secondary',
-              '&:hover': { color: 'white' },
-              minWidth: 0,
-            }}
-          >
-            <QueueMusic fontSize="small" />
-          </Button> */}
-          {/* <Button
-            sx={{
-              color: 'text.secondary',
-              '&:hover': { color: 'white' },
-              minWidth: 0,
-            }}
-          >
-            <Laptop fontSize="small" />
-          </Button> */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <Button
               sx={{
-                color: 'text.secondary',
-                '&:hover': { color: 'white' },
+                color: "text.secondary",
+                "&:hover": { color: "white" },
                 minWidth: 0,
               }}
             >
@@ -361,14 +355,17 @@ export default function PlaybackControls() {
               step={1}
               onChange={(_, value) => {
                 setVolume(value as number);
-                if (audioRef.current) audioRef.current.volume = (value as number) / 100;
+                if (audioRef.current)
+                  audioRef.current.volume = (value as number) / 100;
               }}
               sx={{
                 width: 100,
-                '& .MuiSlider-thumb': {
+                "& .MuiSlider-thumb": {
                   width: 12,
                   height: 12,
-                  '&:hover': { boxShadow: '0 0 0 8px rgba(255, 255, 255, 0.16)' },
+                  "&:hover": {
+                    boxShadow: "0 0 0 8px rgba(255, 255, 255, 0.16)",
+                  },
                 },
               }}
             />

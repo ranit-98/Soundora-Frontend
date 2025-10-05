@@ -79,6 +79,7 @@ export default function AddSongDialog() {
             bgcolor: "#09090b",
             border: "1px solid #27272a",
             maxHeight: "80vh",
+            width: "50rem",
           },
         }}
         scroll="paper"

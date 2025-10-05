@@ -26,7 +26,7 @@ interface PlayerStore {
   playNext: () => void;
   playPrevious: () => void;
   setQueue: (songs: Song[]) => void;
-   pause: () => void;
+  pause: () => void;
   resume: () => void;
 }
 
@@ -37,7 +37,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
   currentIndex: 0,
   pause: () => set({ isPlaying: false }),
   resume: () => set({ isPlaying: true }),
-  // Initialize songs without playing
+
   initializeSongs: (songs) => {
     set({
       queue: songs,
@@ -47,7 +47,6 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
     });
   },
 
-  // Play a specific song
   playSong: (song) => {
     const { queue } = get();
     const index = queue.findIndex((s) => s._id === song._id);
@@ -70,12 +69,11 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
       isPlaying: true,
     });
   },
-  // Toggle play/pause
+
   togglePlay: () => {
     set((state) => ({ isPlaying: !state.isPlaying }));
   },
 
-  // Play next song in queue
   playNext: () => {
     const { queue, currentIndex } = get();
     if (queue.length === 0) return;
@@ -88,7 +86,6 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
     });
   },
 
-  // Play previous song in queue
   playPrevious: () => {
     const { queue, currentIndex } = get();
     if (queue.length === 0) return;
@@ -101,7 +98,6 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
     });
   },
 
-  // Set the entire queue
   setQueue: (songs) => {
     set({
       queue: songs,

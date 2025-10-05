@@ -1,15 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useChatStore } from '../stores/useChatStore';
-import { Box, Avatar, Typography, List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 import { Headphones, MusicNote, People } from '@mui/icons-material';
+import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
+import { useEffect } from 'react';
+import { useChatStore } from '../stores/useChatStore';
 
-import { useRouter } from 'next/navigation';
-import { useUserDetails } from '@/api/hooks/useUsers';
-import { useUsers } from '@/api/hooks/useChat';
-import { parseCookies } from 'nookies';
 import { fetchUsers } from '@/api/functions/users';
+import { useUsers } from '@/api/hooks/useChat';
+import { useUserDetails } from '@/api/hooks/useUsers';
+import { parseCookies } from 'nookies';
 
 const LoginPrompt = () => (
   <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', p: 3, textAlign: 'center' }}>

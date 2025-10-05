@@ -27,7 +27,7 @@ export default async function handler(
 
     const { id_token: idToken } = tokenResponse.data;
 
-    // Send ID token to Express backend
+    // Send ID token to  backend
     const backendResponse = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}${ENDPOINTS.authCallback}`,
       { token: idToken },
@@ -37,12 +37,7 @@ export default async function handler(
     const { token, userId, googleId, isAdmin } = backendResponse.data;
 
     // Set cookie and redirect
-    //  res.setHeader("Set-Cookie", [
-    //     `token=${token}; Path=/; HttpOnly; SameSite=Lax; Secure`,
-    //     `userId=${userId}; Path=/; SameSite=Lax; Secure`,
-    //     `googleId=${googleId}; Path=/; SameSite=Lax; Secure`,
-    //     `isAdmin=${isAdmin}; Path=/; SameSite=Lax; Secure`,
-    //   ]);
+
     res.setHeader("Set-Cookie", [
       `token=${token}; Path=/;  SameSite=Lax; Secure`,
       `userId=${userId}; Path=/; SameSite=Lax; Secure`,

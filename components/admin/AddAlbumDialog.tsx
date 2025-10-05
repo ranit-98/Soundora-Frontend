@@ -1,26 +1,42 @@
-// components/AddAlbumDialog.tsx
 "use client";
 
 import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { addAlbumSchema, TAddAlbumFormData } from "../../lib/schemas/addAlbumSchema";
-import { Box, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Typography } from "@mui/material";
+import {
+  addAlbumSchema,
+  TAddAlbumFormData,
+} from "../../lib/schemas/addAlbumSchema";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Add, Upload } from "@mui/icons-material";
 import { Toaster } from "react-hot-toast";
 import { useAddAlbum } from "@/api/hooks/useMusic";
 
-
 export default function AddAlbumDialog() {
   const [open, setOpen] = useState(false);
-  const [fileName, setFileName] = useState<string | null>(null); 
+  const [fileName, setFileName] = useState<string | null>(null);
   const { mutate: addAlbum, isPending: isLoading } = useAddAlbum();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<TAddAlbumFormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setValue,
+  } = useForm<TAddAlbumFormData>({
     resolver: yupResolver(addAlbumSchema),
   });
 
-  // Handle file selection
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -44,7 +60,7 @@ export default function AddAlbumDialog() {
         reset();
         setFileName(null);
         if (fileInputRef.current) {
-          fileInputRef.current.value = ""; // Clear file input
+          fileInputRef.current.value = "";
         }
         setOpen(false);
       },
@@ -57,11 +73,27 @@ export default function AddAlbumDialog() {
   return (
     <>
       <Toaster position="top-right" />
-      <Dialog open={open} onClose={() => setOpen(false)} PaperProps={{ sx: { bgcolor: "#09090b", border: "1px solid #27272a" } }}>
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        PaperProps={{
+          sx: {
+            bgcolor: "#09090b",
+            border: "1px solid #27272a",
+            width: "50rem",
+          },
+        }}
+      >
         <DialogTitle>Add New Album</DialogTitle>
         <DialogContent>
-          <DialogContentText>Add a new album to your collection</DialogContentText>
-          <Box component="form" sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 2 }} onSubmit={handleSubmit(onSubmit)}>
+          <DialogContentText>
+            Add a new album to your collection
+          </DialogContentText>
+          <Box
+            component="form"
+            sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 2 }}
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <Box
               sx={{
                 p: 3,
@@ -86,7 +118,11 @@ export default function AddAlbumDialog() {
                 ref={fileInputRef}
                 hidden
               />
-              {errors.imageFile && <Typography color="error" variant="caption">{errors.imageFile.message}</Typography>}
+              {errors.imageFile && (
+                <Typography color="error" variant="caption">
+                  {errors.imageFile.message}
+                </Typography>
+              )}
             </Box>
             <TextField
               label="Album Title"

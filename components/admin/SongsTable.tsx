@@ -1,26 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useDeleteSong, useSongs } from '@/api/hooks/useMusic';
+import { CalendarToday, Delete } from '@mui/icons-material';
 import {
-  TableContainer,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
   Table,
+  TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  IconButton,
-  Box,
-  Skeleton,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
+  Typography
 } from '@mui/material';
-import { CalendarToday, Delete } from '@mui/icons-material';
 import Image from 'next/image';
-import { useSongs, useDeleteSong } from '@/api/hooks/useMusic';
+import { useState } from 'react';
 
 export default function SongsTable() {
   const { data: songs = [], isLoading, error, refetch } = useSongs();

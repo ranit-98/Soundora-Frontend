@@ -50,31 +50,10 @@ export default function LeftSidebar() {
     <Box
       sx={{ height: "100%", display: "flex", flexDirection: "column", gap: 1 }}
     >
-      <Box sx={{ bgcolor: "#09090b", p: 2, borderRadius: 2 }}>
-        <List>
-          {/* <ListItem disablePadding> */}
-          {/* <ListItemButton component={Link} href="/" sx={{ color: 'white', '&:hover': { bgcolor: '#18181b' } }}>
-              <ListItemIcon><HomeOutlined sx={{ color: 'white' }} /></ListItemIcon>
-              <ListItemText primary="Home" sx={{ display: { xs: 'none', md: 'block' } }} />
-            </ListItemButton> */}
-          {/* </ListItem> */}
-          {/* <ListItem disablePadding>
-            <ListItemButton component={Link} href="/chat" sx={{ color: 'white', '&:hover': { bgcolor: '#18181b' } }}>
-              <ListItemIcon><MessageOutlined sx={{ color: 'white' }} /></ListItemIcon>
-              <ListItemText primary="Messages" sx={{ display: { xs: 'none', md: 'block' } }} />
-            </ListItemButton>
-          </ListItem> */}
-        </List>
-      </Box>
       <Box sx={{ flex: 1, bgcolor: "#09090b", p: 2, borderRadius: 2 }}>
         <Box sx={{ display: "flex", alignItems: "center", mb: 2, px: 1 }}>
           <LibraryMusicOutlined sx={{ mr: 1, fontSize: 20, color: "white" }} />
-          <Typography
-            variant="subtitle1"
-
-          >
-            Playlists
-          </Typography>
+          <Typography variant="subtitle1">Playlists</Typography>
         </Box>
         <Box sx={{ height: "calc(100vh - 300px)", overflowY: "auto" }}>
           {isLoading ? (
@@ -109,9 +88,13 @@ export default function LeftSidebar() {
                         color: "text.secondary",
                       }}
                     />
-                    <Typography variant="subtitle1" sx={{ display: { xs: 'none', md: 'block' }, color: 'white' }}>
-  
-</Typography>
+                    <Typography
+                      variant="subtitle1"
+                      sx={{
+                        display: { xs: "none", md: "block" },
+                        color: "white",
+                      }}
+                    ></Typography>
                   </ListItemButton>
                 </ListItem>
               ))}

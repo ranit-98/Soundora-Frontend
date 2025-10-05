@@ -1,16 +1,15 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { usePlayerStore } from '../../../stores/usePlayerStore';
-import { Box, Button, Typography, IconButton } from '@mui/material';
-import { PlayArrow, Pause, ArrowBack } from '@mui/icons-material';
-import Image from 'next/image';
 import { useAlbumById } from '@/api/hooks/useMusic';
-import Topbar from '@/components/Topbar';
-import PlaybackControls from '@/components/PlaybackControls';
 import LeftSidebar from '@/components/LeftSidebar';
+import PlaybackControls from '@/components/PlaybackControls';
+import Topbar from '@/components/Topbar';
+import { ArrowBack, Pause, PlayArrow } from '@mui/icons-material';
+import { Box, Button, IconButton, Typography } from '@mui/material';
 import { GetServerSideProps } from 'next';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { usePlayerStore } from '../../../stores/usePlayerStore';
 interface AlbumPageProps {
   albumId: string;
 }
@@ -322,7 +321,7 @@ export default function AlbumPage({ albumId }: AlbumPageProps) {
         </Box>
       </Box>
 
-      {/* Fixed Playback Controls */}
+    
       <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1100 }}>
         <PlaybackControls />
       </Box>

@@ -4,7 +4,7 @@ import { devtools } from 'zustand/middleware';
 interface MusicState {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  // Add other local state if needed, e.g., selectedAlbumId
+  
 }
 
 export const useMusicStore = create<MusicState>()(
