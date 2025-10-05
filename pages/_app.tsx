@@ -8,7 +8,7 @@ import type { AppProps } from 'next/app';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // Cache queries for 5 minutes
+      staleTime: 5 * 60 * 1000, 
     },
   },
 });
@@ -16,8 +16,8 @@ const queryClient = new QueryClient({
 const theme = createTheme({
   palette: {
     mode: 'dark',
-    primary: { main: '#22c55e' }, // Green for play buttons, accents
-    secondary: { main: '#a855f7' }, // Purple for admin actions
+    primary: { main: '#22c55e' }, 
+    secondary: { main: '#a855f7' }, 
     background: { default: '#09090b', paper: '#18181b' },
     divider: '#27272a',
     text: { primary: '#ffffff', secondary: '#9ca3af' },

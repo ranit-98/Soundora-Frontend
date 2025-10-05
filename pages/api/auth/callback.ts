@@ -44,10 +44,10 @@ export default async function handler(
     //     `isAdmin=${isAdmin}; Path=/; SameSite=Lax; Secure`,
     //   ]);
     res.setHeader("Set-Cookie", [
-      `token=${token}; Path=/; HttpOnly; SameSite=None; Secure`,
-      `userId=${userId}; Path=/; SameSite=None; Secure`,
-      `googleId=${googleId}; Path=/; SameSite=None; Secure`,
-      `isAdmin=${isAdmin}; Path=/; SameSite=None; Secure`,
+      `token=${token}; Path=/; HttpOnly; SameSite=Lax; Secure`,
+      `userId=${userId}; Path=/; SameSite=Lax; Secure`,
+      `googleId=${googleId}; Path=/;SameSite=Lax; Secure`,
+      `isAdmin=${isAdmin}; Path=/; SameSite=Lax; Secure`,
     ]);
 
     res.redirect(`${process.env.NEXT_APP_FRONTEND_BASE_URL}/`);

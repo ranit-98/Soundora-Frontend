@@ -24,7 +24,6 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showFriendsActivity] = useState(false);
 
-  // Initialize songs without autoplay
   useEffect(() => {
     if (featuredSongs.length > 0) {
       initializeSongs(featuredSongs);
@@ -90,7 +89,6 @@ export default function Home() {
           <LeftSidebar />
         </Drawer>
 
-        {/* Main Content - Hidden on mobile when Friends Activity is shown */}
         <Box
           component="main"
           sx={{
@@ -119,7 +117,6 @@ export default function Home() {
         </Box>
       </Box>
 
-      {/* Fixed Playback Controls */}
       <Box
         sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 1100 }}
       >
